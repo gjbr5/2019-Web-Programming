@@ -52,19 +52,19 @@ mysqli_close($db);
                     </thead>
                     <tbody>
                     <?php
-                    # TODO : 아래 표시되는 내용을, MySQL 테이블에 있는 레코드로 대체하기!
+                    # 아래 표시되는 내용을, MySQL 테이블에 있는 레코드로 대체하기!
                     # Note : column6 에 해당하는 Total 은 Price 값과 Quantity 값의 곱으로 표시!
                     $num = mysqli_num_rows($table);
                     for ($i = 0; $i < $num; $i++) {
                         $row = mysqli_fetch_array($table);
                         echo "
-                    <tr onclick=\"location.href = ('board_form.php?num={$row[num]}')\">
-                        <td class=\"column1\">{$row[date]}</td>
-                        <td class=\"column2\">{$row[order_id]}</td>
-                        <td class=\"column3\">{$row[name]}</td>
-                        <td class=\"column4\">$$row[price]</td>
-                        <td class=\"column5\">{$row[quantity]}</td>
-                        <td class=\"column6\">$$row[total]</td>
+                    <tr onclick=\"location.href = ('board_form.php?num={$row['num']}')\">
+                        <td class=\"column1\">{$row['date']}</td>
+                        <td class=\"column2\">{$row['order_id']}</td>
+                        <td class=\"column3\">{$row['name']}</td>
+                        <td class=\"column4\">\${$row['price']}</td>
+                        <td class=\"column5\">{$row['quantity']}</td>
+                        <td class=\"column6\">\${$row['total']}</td>
                     </tr>";
                     }
                     ?>
