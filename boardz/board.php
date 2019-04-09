@@ -20,31 +20,26 @@
 
 <body>
 <div class="seventyfive-percent  centered-block">
-    <!-- Sample code block -->
     <div>
         <hr class="seperator">
-
-        <!-- Example header and explanation -->
         <div class="text-center">
             <h2>Beautiful <strong>Boardz</strong></h2>
             <div style="display: block; width: 50%; margin-right: auto; margin-left: auto; position: relative;">
                 <form class="example" action="board.php" method="post">
-                    <input type="text" placeholder="Search.." name="search">
+                    <label for="search"><input type="text" placeholder="Search.." name="search"/></label>
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
         </div>
 
-        <!--<hr class="seperator fifty-percent">-->
-
-        <!-- Example Boardz element. -->
         <div class="boardz centered-block beautiful">
             <?php
-
             $connect = mysqli_connect("localhost", "jjh", "1234");
             $db_con = mysqli_select_db($connect, "jjh_db");
-
-            $sql = "SELECT * FROM boardz WHERE title LIKE '%{$_POST[search]}%';";
+            if (isset($_POST['search']))
+                $sql = "SELECT * FROM boardz WHERE title LIKE '%{$_POST['search']}%';";
+            else
+                $sql = "SELECT * FROM boardz;";
             $result = mysqli_query($connect, $sql);
             $num = mysqli_num_rows($result);
 
@@ -52,21 +47,16 @@
             $second = array();
             $third = array();
 
-            echo "\n";
             for ($i = 0; $i < $num; $i++) {
                 $row = mysqli_fetch_array($result);
 
-                $item = "<li>\n";
-
-                if ($row[title])
-                    $item .= "<h1>{$row[title]}</h1>\n";
-
-                if ($row[contents])
-                    $item .= "{$row[contents]}<br />\n";
-
-                $item .= "<img src='{$row[image_url]}' alt='demo image' />\n";
-
-                $item .= "</li>\n";
+                $item = "\n\t\t\t\t<li>";
+                if ($row['title'])
+                    $item .= "<h1>{$row['title']}</h1>";
+                if ($row['contents'])
+                    $item .= "{$row['contents']}<br />";
+                $item .= "<img src='{$row['image_url']}' alt='demo image' />";
+                $item .= "</li>";
 
                 switch ($i % 3) {
                     case 0:
@@ -81,30 +71,30 @@
                 }
             }
             if (count($first)) {
-                echo "<ul>\n";
+                echo "\n\t\t\t<ul>";
                 foreach ($first as $item)
                     echo $item;
-                echo "</ul>\n";
+                echo "\n\t\t\t</ul>";
             }
             if (count($second)) {
-                echo "<ul>\n";
+                echo "\n\t\t\t<ul>";
                 foreach ($second as $item)
                     echo $item;
-                echo "</ul>\n";
+                echo "\n\t\t\t</ul>";
+
             }
             if (count($third)) {
-                echo "<ul>\n";
+                echo "\n\t\t\t<ul>";
                 foreach ($third as $item)
                     echo $item;
-                echo "</ul>\n";
+                echo "\n\t\t\t</ul>";
             }
             mysqli_close($connect);
             ?>
+
         </div>
     </div>
-
     <hr class="seperator">
-
 </div>
 </body>
 </html>
