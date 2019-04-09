@@ -1,5 +1,4 @@
 <?php
-# TODO: MySQL 데이터베이스 연결 및 레코드 가져오기!
 $db = mysqli_connect("localhost", "jjh", "1234");
 mysqli_select_db($db, "jjh_db");
 $table = mysqli_query($db, 'SELECT num, date, order_id, name, price, quantity, price * quantity AS "total" FROM tableboard_shop;');
@@ -52,8 +51,6 @@ mysqli_close($db);
                     </thead>
                     <tbody>
                     <?php
-                    # 아래 표시되는 내용을, MySQL 테이블에 있는 레코드로 대체하기!
-                    # Note : column6 에 해당하는 Total 은 Price 값과 Quantity 값의 곱으로 표시!
                     $num = mysqli_num_rows($table);
                     for ($i = 0; $i < $num; $i++) {
                         $row = mysqli_fetch_array($table);
@@ -68,6 +65,7 @@ mysqli_close($db);
                     </tr>";
                     }
                     ?>
+
                     </tbody>
                 </table>
             </div>

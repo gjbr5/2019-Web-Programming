@@ -23,9 +23,6 @@
 ```
 
 ## MySQL 테이블 생성!
-
-[여기에 테이블 생성 시, 사용한 Query 를 작성하세요.]
-
 Note: 
 - table 이름은 tableboard_shop 으로 생성
 - 기본키는 num 으로, 그 외의 속성은 board_form.php 의 input 태그 name 에 표시된 속성 이름으로 생성
@@ -81,13 +78,35 @@ for ($i = 0; $i < $num; $i++) {
 이상의 반복문을 통해 값을 출력시켰습니다.
 ## function
 ### insert.php 수정
+insert_valid() 함수를 작성해 입력값을 검증하고,
 ```
-SELECT num+1 FROM tableboard_shop ORDER BY num DESC LIMIT 1;
+SELECT num+1 AS "num" FROM tableboard_shop ORDER BY num DESC LIMIT 1;
 ```
-위 Query로 가장 최신글의 num값에 1을 더해 입력할 레코드의 num값으로 삼았습니다.
+위 Query로 가장 최신글의 num값에 1을 더해 입력할 레코드의 num값으로 삼고,
+```
+INSERT INTO tableboard_shop VALUES
+({$num}, '{$_POST['date']}', {$_POST['order_id']}, '{$_POST['name']}', {$_POST['price']}, {$_POST['quantity']});
+```
+위 Query로 DB에 데이터를 삽입했습니다.
+
+잘못된 값이 입력되거나 삽입에 실패한 경우 "삽입 실패"라는 alert창이 뜨게 만들었습니다.
 
 ### update.php 수정
-[여기에 update.php 를 어떻게 수정했는지, 설명을 작성하세요.]
+update.php는 update_valid() 함수로 입력값 검증 후, num값이 DB에 들어있는지 확인하였습니다.
+```
+UPDATE tableboard_shop
+SET date='{$_POST['date']}', order_id={$_POST['order_id']}, name='{$_POST['name']}',
+price={$_POST['price']}, quantity={$_POST['quantity']}
+WHERE num={$num};
+```
+검증이 끝난 후에는 위 Query로 DB에 데이터를 수정했습니다.
 
+update.php도 마찬가지로 잘못된 값이 입력되거나 수정에 실패한 경우 "수정 실패"라는 alert창이 뜨게 만들었습니다.
 ### delete.php 수정
-[여기에 delete.php 를 어떻게 수정했는지, 설명을 작성하세요.]
+delete.php도 역시 입력값 검증 후,
+```
+DELETE FROM tableboard_shop WHERE num={$_GET['num']};
+```
+위 Query로 DB에서 데이터를 삭제하였습니다.
+
+삭제하지 못한 경우 "삭제 실패"라는 alert창이 뜨게 만들었습니다.
