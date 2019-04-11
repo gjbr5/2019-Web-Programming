@@ -30,9 +30,7 @@ function db_update()
 
 if (!(update_valid() && db_update())) {
     echo "<script>alert('수정 실패');</script>";
-    return;
 }
-
 ?>
 
 <script>location.replace('../index.php');</script>
