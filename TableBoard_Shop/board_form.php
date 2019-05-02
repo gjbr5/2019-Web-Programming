@@ -1,18 +1,15 @@
 <?php
-#TODO: update form 인 경우, form 에 정보 표시
-if (isset($_GET[num])) {
-    #TODO: MySQL 테이블에서, num에 해당하는 레코드 가져오기
+if (isset($_GET['num'])) {
     $db = mysqli_connect("localhost", "jjh", "1234");
     mysqli_select_db($db, "jjh_db");
-    $table = mysqli_query($db, "SELECT date, order_id, name, price, quantity FROM tableboard_shop WHERE num={$_GET[num]};");
+    $table = mysqli_query($db, "SELECT date, order_id, name, price, quantity FROM tableboard_shop WHERE num={$_GET['num']};");
     $row = mysqli_fetch_array($table);
     mysqli_close($db);
 }
 ?>
-
 <!-- 출처 : https://colorlib.com/wp/template/responsive-table-v1/ -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <title>Table V01</title>
     <meta charset="UTF-8">
@@ -42,75 +39,83 @@ if (isset($_GET[num])) {
             <a href="index.php"
                style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; border-radius: 10px; margin-bottom: 5px;">
                 Back </a>
-            <?php
-            if (isset($_GET[num])) {
-                echo "<form method=\"POST\" action=\"function/update.php\">";
-            } else {
-                echo "<form method=\"POST\" action=\"function/insert.php\">";
-            }
-            ?>
+            <form method="POST" action="<?php
+            if (isset($_GET['num']))
+                echo "function/update.php?num={$_GET['num']}";
+            else
+                echo "function/insert.php";
+            ?>">
+                <div class="table100">
+                    <table>
+                        <thead>
+                        <tr class="table100-head">
+                            <th class="column1">Date</th>
+                            <th class="column2">Order ID</th>
+                            <th class="column3">Name</th>
+                            <th class="column4">Price</th>
+                            <th class="column5">Quantity</th>
+                            <th class="column6">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <?php if (isset($_GET['num'])) { ?>
 
-            <div class="table100">
-                <table>
-                    <thead>
-                    <tr class="table100-head">
-                        <th class="column1">Date</th>
-                        <th class="column2">Order ID</th>
-                        <th class="column3">Name</th>
-                        <th class="column4">Price</th>
-                        <th class="column5">Quantity</th>
-                        <th class="column6">Total</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <?php
-                        if (isset($_GET[num])) { //update 의 경우!
-                            ?>
-                            <td class="column1"><input name="date" type="text" value="<? echo $row[date]; ?>"/></td>
-                            <td class="column2"><input name="order_id" type="number"
-                                                       value="<? echo $row[order_id]; ?>"/></td>
-                            <td class="column3"><input name="name" type="text" value="<? echo $row[name]; ?>"/></td>
-                            <td class="column4"><input name="price" type="number" placeholder="$"
-                                                       style="text-align: right;" value="<? echo $row[price]; ?>"/></td>
-                            <td class="column5"><input name="quantity" type="number" value="<? echo $row[quantity]; ?>"
-                                                       style="text-align: right;"/></td>
-                            <td class="column6"> $<span id="total"> <? echo $row[price] * $row[quantity]; ?> </span>
-                            </td>
-                            <?php
-                        } else {
-                            ?>
-                            <td class="column1"><input name="date" type="text"/></td>
-                            <td class="column2"><input name="order_id" type="number"/></td>
-                            <td class="column3"><input name="name" type="text"/></td>
-                            <td class="column4"><input name="price" type="number" placeholder="$"
-                                                       style="text-align: right;"/></td>
-                            <td class="column5"><input name="quantity" type="number" value="1"
-                                                       style="text-align: right;"/></td>
-                            <td class="column6"> $<span id="total">0</span></td>
-                            <?php
-                        }
-                        ?>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <?php
-            if (isset($_GET[num])) {
-                ?>
-                <a href="function/delete.php?num=<? echo $_GET[num] ?>"
-                   style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; float: right; border-radius: 10px; margin-top: 5px; margin-left: 5px; color: #007bff;">
-                    Delete </a>
-                <input style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; float: right; border-radius: 10px; margin-top: 5px; margin-left: 5px; color: #007bff; cursor: pointer;"
-                       type="submit" value="Update">
-                <?php
-            } else {
-                ?>
-                <input style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; float: right; border-radius: 10px; margin-top: 5px; margin-left: 5px; color: #007bff; cursor: pointer;"
-                       type="submit" value="Insert">
-                <?php
-            }
-            ?>
+                                <td class="column1">
+                                    <input name="date" type="text" value="<?php echo $row['date']; ?>"/>
+                                </td>
+                                <td class="column2">
+                                    <input name="order_id" type="number" value="<?php echo $row['order_id']; ?>"/>
+                                </td>
+                                <td class="column3">
+                                    <input name="name" type="text" value="<?php echo $row['name']; ?>"/>
+                                </td>
+                                <td class="column4">
+                                    <input name="price" type="number" placeholder="$" style="text-align: right;"
+                                           value="<?php echo $row['price']; ?>"/>
+                                </td>
+                                <td class="column5">
+                                    <input name="quantity" type="number" value="<?php echo $row['quantity']; ?>"
+                                           style="text-align: right;"/>
+                                </td>
+                                <td class="column6">
+                                    $<span id="total"> <?php echo $row['price'] * $row['quantity']; ?> </span>
+                                </td>
+                            <?php } else { ?>
+
+                                <td class="column1">
+                                    <input name="date" type="text" value="<?php date_default_timezone_set('Asia/Seoul');
+                                    echo date('Y-m-d h:i:s', time()); ?>"/>
+                                </td>
+                                <td class="column2"><input name="order_id" type="number"/></td>
+                                <td class="column3"><input name="name" type="text"/></td>
+                                <td class="column4">
+                                    <input name="price" type="number" placeholder="$" style="text-align: right;"/>
+                                </td>
+                                <td class="column5">
+                                    <input name="quantity" type="number" value="1" style="text-align: right;"/>
+                                </td>
+                                <td class="column6">
+                                    $<span id="total">0</span>
+                                </td>
+                            <?php } ?>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <?php if (isset($_GET['num'])) { ?>
+
+                    <a href="function/delete.php?num=<?php echo $_GET['num']; ?>"
+                       style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; float: right; border-radius: 10px; margin-top: 5px; margin-left: 5px; color: #007bff;">Delete</a>
+                    <input type="submit" value="Update"
+                           style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; float: right; border-radius: 10px; margin-top: 5px; margin-left: 5px; color: #007bff; cursor: pointer;">
+                <?php } else { ?>
+
+                    <input type="submit" value="Insert"
+                           style="border: 1px; padding: 10px; background: #36304a; display: block; width: 100px; text-align: center; float: right; border-radius: 10px; margin-top: 5px; margin-left: 5px; color: #007bff; cursor: pointer;">
+                <?php } ?>
+
             </form>
         </div>
     </div>

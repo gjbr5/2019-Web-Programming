@@ -1,22 +1,23 @@
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <?php
-/**
- * Created by PhpStorm.
- * User: kim2
- * Date: 2019-04-04
- * Time: 오전 9:39
- */
+function delete_valid($db)
+{
+    return isset($_GET['num'])
+        && isset(mysqli_fetch_array(
+                mysqli_query($db, "SELECT num FROM tableboard_shop WHERE num={$_GET['num']};"))['num']);
+}
 
-# TODO: MySQL DB에서, num에 해당하는 레코드 삭제하기!
-$db = mysqli_connect("localhost", "jjh", "1234");
-mysqli_select_db($db, "jjh_db");
-$table = mysqli_query($db, "DELETE FROM tableboard_shop WHERE num={$_GET[num]};");
-mysqli_close($db);
+function db_delete()
+{
+    $db = mysqli_connect("localhost", "jjh", "1234");
+    mysqli_select_db($db, "jjh_db");
+    $result = mysqli_query($db, "DELETE FROM tableboard_shop WHERE num={$_GET['num']};");
+    mysqli_close($db);
+    return $result;
+}
 
-echo "<script> alert('삭제 완료') </script>"
-
+if (!(delete_valid($db) && db_delete()))
+    echo "<script>alert('삭제 실패');</script>";
 ?>
 
-<script>
-    location.replace('../index.php');
-</script>
+<script>location.replace('../index.php');</script>
