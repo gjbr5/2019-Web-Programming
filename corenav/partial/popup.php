@@ -18,3 +18,15 @@
         <input type="submit" value="Login"/>
     </form>
 </div>
+
+<div id="upload_to_pop_up">
+    <h3>Upload</h3>
+    <form action="" method="post">
+        <img id="imgPrev" style="display:block;"/>
+        <input type="text" name="title" placeholder="title"/><br/>
+        <input type="text" name="description" placeholder="description"/><br/>
+        <input type="file" id="imgInp"/><br/>
+        <input type="submit"/>
+    </form>
+
+</div>

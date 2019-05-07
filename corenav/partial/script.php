@@ -11,4 +11,8 @@
     $('#login').click(function() {
         $('#element_to_pop_up').bPopup();
     });
+
+    $('#upload').click(function() {
+        $('#upload_to_pop_up').bPopup();
+    });
 </script>

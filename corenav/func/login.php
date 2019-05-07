@@ -13,6 +13,6 @@ if ($id) {
 } else {
     echo '<script>alert("Login Failed!");</script>';
 }
-?>
 
-<script>history.go(-1);</script>
+echo "<script>location.replace('../index.php');</script>";
+?>
