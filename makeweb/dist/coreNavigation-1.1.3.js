@@ -1,7 +1,7 @@
 // ============================================== //
 // Author : Adam Muhammad Nurdin
 // Email  : adamnurdin0@gmail.com
-// Project  : corenav
+// Project  : makeweb
 // version  : 1.1.3
 // Description  : coreNavigation is a multi purpose navigation menu for javascript library based on jquery, come with more style and easy to combination.
 // ============================================== //

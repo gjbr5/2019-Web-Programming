@@ -7,6 +7,17 @@
     padding: 20px;
 }
 
+#element_to_pop_up input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#element_to_pop_up input[type='submit'] {
+    background-color: #1f7e9a;
+    color: #fff;
+}
+
 #upload_to_pop_up {
     min-width: 200px;
     border: solid;
@@ -19,4 +30,7 @@
 
 #upload_to_pop_up #imgPrev {
     width: 100%;
+    height: auto;
+    display: none;
+    margin-bottom: 10px;
 }
